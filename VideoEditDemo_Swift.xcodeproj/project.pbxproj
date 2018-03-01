@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		046BF1072023127C009C44A5 /* UIViewChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046BF1032023127C009C44A5 /* UIViewChain.swift */; };
+		046BF1082023127D009C44A5 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046BF1042023127C009C44A5 /* StringExtensions.swift */; };
+		046BF1092023127D009C44A5 /* Namespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046BF1052023127C009C44A5 /* Namespace.swift */; };
+		046BF10A2023127D009C44A5 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046BF1062023127C009C44A5 /* UIColorExtensions.swift */; };
+		046BF11320231A7C009C44A5 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F1F63B20230CCD0089DA29 /* Alamofire.framework */; };
+		046BF11420231A88009C44A5 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F1F63D20230CD60089DA29 /* Kingfisher.framework */; };
+		046BF11520231A97009C44A5 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F1F64320230CE00089DA29 /* RxSwift.framework */; };
+		046BF11620231AA3009C44A5 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F1F64120230CDD0089DA29 /* RxCocoa.framework */; };
+		046BF11720231ABA009C44A5 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F1F64720230CE90089DA29 /* SnapKit.framework */; };
+		04758EFB2044220C00D5D5BC /* PlayVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04758EFA2044220C00D5D5BC /* PlayVideoViewController.swift */; };
+		04758EFD2044221A00D5D5BC /* ShortVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04758EFC2044221A00D5D5BC /* ShortVideoViewController.swift */; };
+		04758EFF2044229100D5D5BC /* RecordVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04758EFE2044229100D5D5BC /* RecordVideoViewController.swift */; };
+		04758F01204422A400D5D5BC /* MergeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04758F00204422A400D5D5BC /* MergeVideoViewController.swift */; };
 		04F1F60D20230A990089DA29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1F60C20230A990089DA29 /* AppDelegate.swift */; };
 		04F1F60F20230A990089DA29 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1F60E20230A990089DA29 /* ViewController.swift */; };
 		04F1F61220230A990089DA29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04F1F61020230A990089DA29 /* Main.storyboard */; };
@@ -34,6 +47,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		046BF1032023127C009C44A5 /* UIViewChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewChain.swift; sourceTree = "<group>"; };
+		046BF1042023127C009C44A5 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		046BF1052023127C009C44A5 /* Namespace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Namespace.swift; sourceTree = "<group>"; };
+		046BF1062023127C009C44A5 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		04758EFA2044220C00D5D5BC /* PlayVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayVideoViewController.swift; sourceTree = "<group>"; };
+		04758EFC2044221A00D5D5BC /* ShortVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortVideoViewController.swift; sourceTree = "<group>"; };
+		04758EFE2044229100D5D5BC /* RecordVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVideoViewController.swift; sourceTree = "<group>"; };
+		04758F00204422A400D5D5BC /* MergeVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeVideoViewController.swift; sourceTree = "<group>"; };
 		04F1F60920230A990089DA29 /* VideoEditDemo_Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoEditDemo_Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F1F60C20230A990089DA29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04F1F60E20230A990089DA29 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +68,13 @@
 		04F1F62820230A9A0089DA29 /* VideoEditDemo_SwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoEditDemo_SwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F1F62C20230A9A0089DA29 /* VideoEditDemo_SwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditDemo_SwiftUITests.swift; sourceTree = "<group>"; };
 		04F1F62E20230A9A0089DA29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04F1F63B20230CCD0089DA29 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		04F1F63D20230CD60089DA29 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+		04F1F63F20230CD90089DA29 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		04F1F64120230CDD0089DA29 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		04F1F64320230CE00089DA29 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		04F1F64520230CE60089DA29 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
+		04F1F64720230CE90089DA29 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +82,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046BF11720231ABA009C44A5 /* SnapKit.framework in Frameworks */,
+				046BF11620231AA3009C44A5 /* RxCocoa.framework in Frameworks */,
+				046BF11520231A97009C44A5 /* RxSwift.framework in Frameworks */,
+				046BF11420231A88009C44A5 /* Kingfisher.framework in Frameworks */,
+				046BF11320231A7C009C44A5 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,13 +107,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		046BF1022023127C009C44A5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				046BF1032023127C009C44A5 /* UIViewChain.swift */,
+				046BF1042023127C009C44A5 /* StringExtensions.swift */,
+				046BF1052023127C009C44A5 /* Namespace.swift */,
+				046BF1062023127C009C44A5 /* UIColorExtensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		04F1F60020230A990089DA29 = {
 			isa = PBXGroup;
 			children = (
+				046BF1022023127C009C44A5 /* Utils */,
 				04F1F60B20230A990089DA29 /* VideoEditDemo_Swift */,
 				04F1F62020230A9A0089DA29 /* VideoEditDemo_SwiftTests */,
 				04F1F62B20230A9A0089DA29 /* VideoEditDemo_SwiftUITests */,
 				04F1F60A20230A990089DA29 /* Products */,
+				04F1F63A20230CCC0089DA29 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +145,10 @@
 			children = (
 				04F1F60C20230A990089DA29 /* AppDelegate.swift */,
 				04F1F60E20230A990089DA29 /* ViewController.swift */,
+				04758EFA2044220C00D5D5BC /* PlayVideoViewController.swift */,
+				04758EFC2044221A00D5D5BC /* ShortVideoViewController.swift */,
+				04758EFE2044229100D5D5BC /* RecordVideoViewController.swift */,
+				04758F00204422A400D5D5BC /* MergeVideoViewController.swift */,
 				04F1F61020230A990089DA29 /* Main.storyboard */,
 				04F1F61320230A990089DA29 /* Assets.xcassets */,
 				04F1F61520230A990089DA29 /* LaunchScreen.storyboard */,
@@ -125,6 +175,20 @@
 			path = VideoEditDemo_SwiftUITests;
 			sourceTree = "<group>";
 		};
+		04F1F63A20230CCC0089DA29 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				04F1F64720230CE90089DA29 /* SnapKit.framework */,
+				04F1F64520230CE60089DA29 /* RxTest.framework */,
+				04F1F64320230CE00089DA29 /* RxSwift.framework */,
+				04F1F64120230CDD0089DA29 /* RxCocoa.framework */,
+				04F1F63F20230CD90089DA29 /* RxBlocking.framework */,
+				04F1F63D20230CD60089DA29 /* Kingfisher.framework */,
+				04F1F63B20230CCD0089DA29 /* Alamofire.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +199,7 @@
 				04F1F60520230A990089DA29 /* Sources */,
 				04F1F60620230A990089DA29 /* Frameworks */,
 				04F1F60720230A990089DA29 /* Resources */,
+				046BF11820231AC4009C44A5 /* carthage copy-frameworks */,
 			);
 			buildRules = (
 			);
@@ -254,13 +319,43 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		046BF11820231AC4009C44A5 /* carthage copy-frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+			);
+			name = "carthage copy-frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		04F1F60520230A990089DA29 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046BF1082023127D009C44A5 /* StringExtensions.swift in Sources */,
+				04758F01204422A400D5D5BC /* MergeVideoViewController.swift in Sources */,
+				04758EFF2044229100D5D5BC /* RecordVideoViewController.swift in Sources */,
 				04F1F60F20230A990089DA29 /* ViewController.swift in Sources */,
+				046BF1072023127C009C44A5 /* UIViewChain.swift in Sources */,
+				046BF10A2023127D009C44A5 /* UIColorExtensions.swift in Sources */,
+				046BF1092023127D009C44A5 /* Namespace.swift in Sources */,
+				04758EFB2044220C00D5D5BC /* PlayVideoViewController.swift in Sources */,
 				04F1F60D20230A990089DA29 /* AppDelegate.swift in Sources */,
+				04758EFD2044221A00D5D5BC /* ShortVideoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +522,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BN927HN6WW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = VideoEditDemo_Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "FeiZaoTai.VideoEditDemo-Swift";
@@ -441,6 +541,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BN927HN6WW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = VideoEditDemo_Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "FeiZaoTai.VideoEditDemo-Swift";

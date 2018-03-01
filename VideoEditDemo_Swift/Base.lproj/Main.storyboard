@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="o17-t1-cyK">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,16 +13,202 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="VideoEditDemo_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSl-AU-Qcz">
+                                <rect key="frame" x="113" y="113" width="149" height="30"/>
+                                <state key="normal" title="Select and Play Video"/>
+                                <connections>
+                                    <segue destination="OEi-F2-zVp" kind="show" id="dfO-cc-d3T"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3a-hn-z1O">
+                                <rect key="frame" x="149" y="163" width="76" height="30"/>
+                                <state key="normal" title="shortVideo"/>
+                                <connections>
+                                    <segue destination="go5-CU-HuI" kind="show" id="fNJ-ta-SHg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f81-Ue-oyz">
+                                <rect key="frame" x="107.5" y="213" width="159" height="30"/>
+                                <state key="normal" title="Record and Save Video"/>
+                                <connections>
+                                    <segue destination="fbc-5s-3Yz" kind="show" id="rCl-Bu-u8V"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h9E-RX-gcP">
+                                <rect key="frame" x="144" y="263" width="87" height="30"/>
+                                <state key="normal" title="Merge Video"/>
+                                <connections>
+                                    <segue destination="VPE-Sq-1e5" kind="show" id="4Eu-Ra-Xrk"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="K3a-hn-z1O" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0oC-BG-Msd"/>
+                            <constraint firstItem="f81-Ue-oyz" firstAttribute="top" secondItem="K3a-hn-z1O" secondAttribute="bottom" constant="20" id="48i-4e-XGo"/>
+                            <constraint firstItem="f81-Ue-oyz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Gzt-kx-LqS"/>
+                            <constraint firstItem="h9E-RX-gcP" firstAttribute="top" secondItem="f81-Ue-oyz" secondAttribute="bottom" constant="20" id="ayU-CF-BjK"/>
+                            <constraint firstItem="kSl-AU-Qcz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="113" id="cGv-7z-9kg"/>
+                            <constraint firstItem="kSl-AU-Qcz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ebS-dI-CnK"/>
+                            <constraint firstItem="K3a-hn-z1O" firstAttribute="top" secondItem="kSl-AU-Qcz" secondAttribute="bottom" constant="20" id="uQM-sS-zDv"/>
+                            <constraint firstItem="h9E-RX-gcP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zid-UN-5Zn"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="GD3-I6-hva"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="913" y="-286"/>
+        </scene>
+        <!--Short Video View Controller-->
+        <scene sceneID="uLA-B4-DMe">
+            <objects>
+                <viewController id="go5-CU-HuI" customClass="ShortVideoViewController" customModule="VideoEditDemo_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="awT-bH-568">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="j6J-SA-OV8"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ucg-bz-Sfu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1805" y="-356"/>
+        </scene>
+        <!--Record Video View Controller-->
+        <scene sceneID="xE8-o3-6pA">
+            <objects>
+                <viewController id="fbc-5s-3Yz" customClass="RecordVideoViewController" customModule="VideoEditDemo_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eDs-rg-56j">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zpk-SW-IRv">
+                                <rect key="frame" x="133.5" y="93" width="107" height="30"/>
+                                <state key="normal" title="record and play"/>
+                                <connections>
+                                    <action selector="recordAndPlay:" destination="fbc-5s-3Yz" eventType="touchUpInside" id="RwA-Y1-2Tl"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zpk-SW-IRv" firstAttribute="centerX" secondItem="eDs-rg-56j" secondAttribute="centerX" id="bLt-6e-3ay"/>
+                            <constraint firstItem="zpk-SW-IRv" firstAttribute="top" secondItem="Wlp-Qj-4OY" secondAttribute="top" constant="93" id="x0O-eX-tJa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Wlp-Qj-4OY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u8V-Qa-Ac9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1810" y="352"/>
+        </scene>
+        <!--Merge Video View Controller-->
+        <scene sceneID="YIn-hD-o2T">
+            <objects>
+                <viewController id="VPE-Sq-1e5" customClass="MergeVideoViewController" customModule="VideoEditDemo_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uv6-Id-iQA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBK-HM-m2t">
+                                <rect key="frame" x="149" y="62" width="76" height="30"/>
+                                <state key="normal" title="Load audio"/>
+                                <connections>
+                                    <action selector="loadAudio:" destination="VPE-Sq-1e5" eventType="touchUpInside" id="79t-OA-7kt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gwn-6m-VW3">
+                                <rect key="frame" x="144" y="122" width="86" height="30"/>
+                                <state key="normal" title="Load asset 1"/>
+                                <connections>
+                                    <action selector="loadAsset:" destination="VPE-Sq-1e5" eventType="touchUpInside" id="Kue-cr-bNK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AuT-tk-ugl">
+                                <rect key="frame" x="143" y="182" width="88" height="30"/>
+                                <state key="normal" title="Load asset 2"/>
+                                <connections>
+                                    <action selector="loadAsset:" destination="VPE-Sq-1e5" eventType="touchUpInside" id="ugT-gI-Ez3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfj-O7-T7i">
+                                <rect key="frame" x="165.5" y="282" width="44" height="30"/>
+                                <state key="normal" title="Merge"/>
+                                <connections>
+                                    <action selector="merge:" destination="VPE-Sq-1e5" eventType="touchUpInside" id="8nx-D7-vSo"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="qfj-O7-T7i" firstAttribute="centerX" secondItem="uv6-Id-iQA" secondAttribute="centerX" id="0kT-Gt-Re5"/>
+                            <constraint firstItem="Gwn-6m-VW3" firstAttribute="top" secondItem="UBK-HM-m2t" secondAttribute="bottom" constant="30" id="3Wi-eE-K0n"/>
+                            <constraint firstItem="AuT-tk-ugl" firstAttribute="centerX" secondItem="uv6-Id-iQA" secondAttribute="centerX" id="7uW-Ld-LaR"/>
+                            <constraint firstItem="Gwn-6m-VW3" firstAttribute="centerX" secondItem="uv6-Id-iQA" secondAttribute="centerX" id="95a-sd-Cm6"/>
+                            <constraint firstItem="UBK-HM-m2t" firstAttribute="centerX" secondItem="uv6-Id-iQA" secondAttribute="centerX" id="EgA-LQ-COd"/>
+                            <constraint firstItem="qfj-O7-T7i" firstAttribute="top" secondItem="AuT-tk-ugl" secondAttribute="bottom" constant="70" id="LCd-uh-Iuj"/>
+                            <constraint firstItem="AuT-tk-ugl" firstAttribute="top" secondItem="Gwn-6m-VW3" secondAttribute="bottom" constant="30" id="Ta6-K9-GaO"/>
+                            <constraint firstItem="UBK-HM-m2t" firstAttribute="top" secondItem="11C-TX-QoZ" secondAttribute="top" constant="62" id="tHW-VW-62q"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="11C-TX-QoZ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cqa-DW-8SR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1801" y="1024"/>
+        </scene>
+        <!--Play Video View Controller-->
+        <scene sceneID="Elj-Yf-MCS">
+            <objects>
+                <viewController id="OEi-F2-zVp" customClass="PlayVideoViewController" customModule="VideoEditDemo_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NHf-sf-EcZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2la-5M-Uo5">
+                                <rect key="frame" x="152" y="76" width="70" height="30"/>
+                                <state key="normal" title="play video"/>
+                                <connections>
+                                    <action selector="playVideo:" destination="OEi-F2-zVp" eventType="touchUpInside" id="LUL-4F-BoG"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="2la-5M-Uo5" firstAttribute="centerX" secondItem="NHf-sf-EcZ" secondAttribute="centerX" id="BsS-N1-a5s"/>
+                            <constraint firstItem="2la-5M-Uo5" firstAttribute="top" secondItem="mhF-ps-7oZ" secondAttribute="top" constant="76" id="DiZ-qx-Xjy"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mhF-ps-7oZ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aVL-fs-ISZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1807" y="-1020"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="V5c-Ln-kd6">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="o17-t1-cyK" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="bdz-AO-9wa">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="adk-JJ-aEM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y4q-CS-LRd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="144" y="-285.15742128935534"/>
         </scene>
     </scenes>
 </document>
