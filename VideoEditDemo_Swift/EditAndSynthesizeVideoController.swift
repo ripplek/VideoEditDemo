@@ -1,65 +1,50 @@
 //
-//  MergeVideoViewController.swift
+//  EditAndSynthesizeVideoController.swift
 //  VideoEditDemo_Swift
 //
-//  Created by ripple_k on 2018/2/26.
+//  Created by ripple_k on 2018/3/2.
 //  Copyright © 2018年 mac. All rights reserved.
 //
 
 import UIKit
-import MediaPlayer
+import AVFoundation
 import MobileCoreServices
-import AssetsLibrary
-import AVKit
-import Photos
 
-enum VideoOrientation {
-    case up, down, left, right, notFound
-}
-
-class MergeVideoViewController: UIViewController {
+class EditAndSynthesizeVideoController: UIViewController {
     
-    @IBAction func loadAudio(_ sender: Any) {
-//        let mediaPickerController = MPMediaPickerController(mediaTypes: .anyAudio)
-//        mediaPickerController.allowsPickingMultipleItems = true
-//        mediaPickerController.delegate = self
-//        mediaPickerController.prompt = "选择音频"
-//        mediaPickerController.loadView()
-//        present(mediaPickerController, animated: true, completion: nil)
-//        let mediaQuery = MPMediaQuery.songs()
-//        print(mediaQuery)
-    }
+    @IBOutlet weak var starTimeTextField: UITextField!
+    @IBOutlet weak var durationTimeTextField: UITextField!
+    @IBOutlet weak var MessageLabel: UILabel!
     
-    @IBAction func loadAsset(_ sender: UIButton) {
-        _currentTag = sender.tag
+    @IBAction func chooseVideoAsset(_ sender: UIButton) {
         p_startMediaBrowserFromViewController(self, usingDelegate: self)
     }
     
-    @IBAction func merge(_ sender: UIButton) {
-        if let firstAsset = _firstAsset, let secondAsset = _secondAsset {
-            p_mergeVideo([firstAsset, secondAsset])
+    @IBAction func addTimeRange(_ sender: UIButton) {
+        if let star = Float64(starTimeTextField.text ?? ""), let duration = Float64(durationTimeTextField.text ?? "") {
+            _timeRanges.append((star, duration))
+            MessageLabel.text?.append("addTimeRange\((star, duration))\n")
         }
     }
-
+    
+    @IBAction func cutVideo(_ sender: UIButton) {
+        guard let asset = _videoAsset, _timeRanges.count > 0 else {
+            return
+        }
+        MessageLabel.text?.append("cutVideo...")
+        p_editAndSynthesizeVideo(asset, ranges: _timeRanges)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-    static func showAlert(controller: UIViewController, title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "确定", style: .default, handler: nil)
-        
-        alert.addAction(action)
-        controller.present(alert, animated: true, completion: nil)
-    }
+    private var _videoAsset: AVAsset?
+    private var _timeRanges: [(Float64, Float64)] = []
     
-    private var _currentTag: Int = 0
-    private var _firstAsset: AVAsset?
-    private var _secondAsset: AVAsset?
-    
-    @objc private func p_video(path: String, didFinishSavingWithError error: NSError?, contextInfo: Any) {
+    @objc private func video(path: String, didFinishSavingWithError error: NSError?, contextInfo: Any) {
         if error != nil {
             print(error ?? "error")
             MergeVideoViewController.showAlert(controller: self, title: "错误", message: "保存失败\n\(error!.localizedDescription)")
@@ -68,47 +53,23 @@ class MergeVideoViewController: UIViewController {
         }
     }
     
-    private func p_startMediaBrowserFromViewController(_ viewController: UIViewController, usingDelegate delegate: UIImagePickerControllerDelegate & UINavigationControllerDelegate) {
-        guard UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) else {
-            return
-        }
-        
-        let mediaUI = UIImagePickerController()
-        mediaUI.sourceType = UIImagePickerControllerSourceType.savedPhotosAlbum
-        mediaUI.mediaTypes = [kUTTypeMovie as String]
-        mediaUI.allowsEditing = false
-        mediaUI.delegate = delegate
-        viewController.present(mediaUI, animated: true, completion: nil)
-    }
-    
-    private func p_exportDidFinish(session: AVAssetExportSession) {
-        if session.status == .completed {
-            if let outputURL = session.outputURL {
-                if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(outputURL.path) {
-                    UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, self, #selector(p_video), nil)
-                }
-            }
-        }
-    }
-    
-    private func p_mergeVideo(_ assets: [AVAsset]) {
-        guard assets.count >= 2 else {
-            print("Merge assets.count < 2")
-            return
-        }
-        
+    private func p_editAndSynthesizeVideo(_ asset: AVAsset, ranges: [(starTime: Float64, duration: Float64)]) {
         // Create AVMutableComposition object. This object will hold your AVMutableCompositionTrack instances.
         let mixComposition = AVMutableComposition()
         // Video track
         if let videoTrack = mixComposition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid) {
             
             do {
-                var beforeAsset: AVAsset?
-                for asset in assets {
+                var beforeTime = kCMTimeZero
+                for range in ranges {
+                    let starTime = CMTimeMakeWithSeconds(range.starTime, asset.duration.timescale)
+                    let durationTime = CMTimeMakeWithSeconds(range.duration, asset.duration.timescale)
+                    let videoRange = CMTimeRangeMake(starTime, durationTime)
+                    
                     if let track = asset.tracks(withMediaType: .video).first {
-                        try videoTrack.insertTimeRange(CMTimeRangeMake(kCMTimeZero, asset.duration), of: track, at: beforeAsset?.duration ?? kCMTimeZero)
+                        try videoTrack.insertTimeRange(videoRange, of: track, at: beforeTime)
                     }
-                    beforeAsset = asset
+                    beforeTime = videoRange.duration
                 }
             } catch _ {
                 print("Failed to load first track")
@@ -119,15 +80,19 @@ class MergeVideoViewController: UIViewController {
         if let audioTrack = mixComposition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid) {
             
             do {
-                var beforeAsset: AVAsset?
-                for asset in assets {
+                var beforeTime = kCMTimeZero
+                for range in ranges {
+                    let starTime = CMTimeMakeWithSeconds(range.starTime, asset.duration.timescale)
+                    let durationTime = CMTimeMakeWithSeconds(range.duration, asset.duration.timescale)
+                    let audioRange = CMTimeRangeMake(starTime, durationTime)
+                    
                     if let track = asset.tracks(withMediaType: .audio).first {
-                        try audioTrack.insertTimeRange(CMTimeRangeMake(kCMTimeZero, asset.duration), of: track, at: beforeAsset?.duration ?? kCMTimeZero)
+                        try audioTrack.insertTimeRange(audioRange, of: track, at: beforeTime)
                     }
-                    beforeAsset = asset
+                    beforeTime = audioRange.duration
                 }
             } catch _ {
-                print("Failed to load audio track")
+                print("Failed to load first track")
             }
         }
         
@@ -142,7 +107,7 @@ class MergeVideoViewController: UIViewController {
         
         // Create Exporter
         guard let exporter = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality) else { return }
-        exporter.videoComposition = p_makeVideoSquare(mixAsset: mixComposition, unmixAssets: assets)
+        exporter.videoComposition = p_makeVideoSquare(mixAsset: mixComposition, unmixAssets: [asset])
         exporter.outputURL = outputURL
         exporter.outputFileType = .mov
         exporter.shouldOptimizeForNetworkUse = true
@@ -153,6 +118,29 @@ class MergeVideoViewController: UIViewController {
                 self.p_exportDidFinish(session: exporter)
             }
         }
+    }
+    
+    private func p_exportDidFinish(session: AVAssetExportSession) {
+        if session.status == .completed {
+            if let outputURL = session.outputURL {
+                if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(outputURL.path) {
+                    UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, self, #selector(video(path:didFinishSavingWithError:contextInfo:)), nil)
+                }
+            }
+        }
+    }
+
+    private func p_startMediaBrowserFromViewController(_ viewController: UIViewController, usingDelegate delegate: UIImagePickerControllerDelegate & UINavigationControllerDelegate) {
+        guard UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) else {
+            return
+        }
+        
+        let mediaUI = UIImagePickerController()
+        mediaUI.sourceType = UIImagePickerControllerSourceType.savedPhotosAlbum
+        mediaUI.mediaTypes = [kUTTypeMovie as String]
+        mediaUI.allowsEditing = false
+        mediaUI.delegate = delegate
+        viewController.present(mediaUI, animated: true, completion: nil)
     }
     
     private func p_makeVideoSquare(mixAsset: AVAsset, unmixAssets: [AVAsset]) -> AVMutableVideoComposition? {
@@ -221,7 +209,7 @@ class MergeVideoViewController: UIViewController {
     private func p_makeTransform(orientation: VideoOrientation, assetTrack: AVAssetTrack) -> CGAffineTransform {
         let cropOffY = (assetTrack.naturalSize.width-assetTrack.naturalSize.height) / 2
         var t2: CGAffineTransform
-
+        
         switch orientation {
         case .up:
             let t1 = CGAffineTransform(translationX: assetTrack.naturalSize.height, y: -cropOffY)
@@ -241,13 +229,10 @@ class MergeVideoViewController: UIViewController {
         }
         return t2
     }
+
 }
 
-extension MergeVideoViewController: MPMediaPickerControllerDelegate {
-    
-}
-
-extension MergeVideoViewController: UIImagePickerControllerDelegate {
+extension EditAndSynthesizeVideoController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let mediaType = info[UIImagePickerControllerMediaType] else { return }
         
@@ -256,14 +241,7 @@ extension MergeVideoViewController: UIImagePickerControllerDelegate {
         if CFStringCompare(mediaType as! CFString, kUTTypeMovie, CFStringCompareFlags(rawValue: 0)) == .compareEqualTo {
             
             if let mediaURL = info[UIImagePickerControllerMediaURL] as? URL {
-                switch _currentTag {
-                case 1:
-                    _firstAsset = AVAsset(url: mediaURL)
-                case 2:
-                    _secondAsset = AVAsset(url: mediaURL)
-                default:
-                    break
-                }
+                _videoAsset = AVAsset(url: mediaURL)
             }
         }
     }
@@ -273,6 +251,4 @@ extension MergeVideoViewController: UIImagePickerControllerDelegate {
     }
 }
 
-extension MergeVideoViewController: UINavigationControllerDelegate {
-    
-}
+extension EditAndSynthesizeVideoController: UINavigationControllerDelegate { }

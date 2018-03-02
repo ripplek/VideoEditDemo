@@ -28,7 +28,7 @@ class ShortVideoViewController: UIViewController {
                 make.center.equalToSuperview()
             }
             .soap.config { (btn) in
-                btn.setTitle("play", for: .normal)
+                btn.setTitle("play and cut", for: .normal)
                 btn.setTitleColor(.purple, for: .normal)
             }
             .rx.tap.subscribe(onNext: { [unowned self] (_) in
@@ -91,86 +91,4 @@ class ShortVideoViewController: UIViewController {
         return nil
     }
     
-    private func p_dropVideo(videoUrl: URL, audioUrl: URL?, captureRange: NSRange) {
-        let videoAsset = AVURLAsset(url: videoUrl)
-        var audioAsset: AVURLAsset
-        audioAsset = videoAsset
-        if let audioUrl = audioUrl {
-            audioAsset = AVURLAsset(url: audioUrl)
-        }
-        
-        // 创建AVMutableComposition对象来添加视频音频资源的AVMutableCompositionTrack
-        let mixConposition = AVMutableComposition()
-        
-        // 开始位置startTime
-        let startTime = CMTimeMakeWithSeconds(Float64(captureRange.location), videoAsset.duration.timescale)
-        // 截取长度videoDuration
-        let videoDuration = CMTimeMakeWithSeconds(Float64(captureRange.length), videoAsset.duration.timescale)
-        
-        let videoTimeRange = CMTimeRangeMake(startTime, videoDuration)
-        let audioTimeRange = CMTimeRangeMake(startTime, videoDuration)
-        
-        // 视频采集compositionVideoTrack
-        let compositionVideoTrack = mixConposition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: kCMPersistentTrackID_Invalid)
-        if let videoAssetTrack = videoAsset.tracks(withMediaType: AVMediaType.video).first {
-            try? compositionVideoTrack?.insertTimeRange(videoTimeRange, of: videoAssetTrack, at: kCMTimeZero)
-        }
-        
-        // 音频采集compositionAudioTrack
-        let compositionAudioTrack = mixConposition.addMutableTrack(withMediaType: AVMediaType.audio, preferredTrackID: kCMPersistentTrackID_Invalid)
-        if let audioAssetTrack = audioAsset.tracks(withMediaType: AVMediaType.audio).first {
-            try? compositionAudioTrack?.insertTimeRange(audioTimeRange, of: audioAssetTrack, at: kCMTimeZero)
-        }
-        
-        // AVAssetExportSession用于合并文件，导出合并后文件，presetName文件的输出类型
-        let assetExportSession = AVAssetExportSession(asset: mixConposition, presetName: AVAssetExportPresetPassthrough)
-        let outputPath = NSTemporaryDirectory().appending("MixVideo.mp4")
-        // 混合后的视频输出路径
-        //        let outputPath = NSHomeDirectory().appending("/MixVideo.mov")
-        print(outputPath)
-        let outputUrl = URL(string: outputPath)
-        if FileManager.default.fileExists(atPath: outputPath) {
-            try? FileManager.default.removeItem(atPath: outputPath)
-        }
-        
-        //输出视频格式 AVFileTypeMPEG4 AVFileTypeQuickTimeMovie...
-        assetExportSession?.outputFileType = AVFileType.mp4
-        assetExportSession?.outputURL = outputUrl
-        assetExportSession?.shouldOptimizeForNetworkUse = true
-        assetExportSession?.exportAsynchronously(completionHandler: {
-            
-            switch assetExportSession!.status {
-            case .completed:
-                print("completionHandler")
-            case .exporting:
-                print("exporting")
-            default:
-                print(assetExportSession?.error)
-            }
-            
-        })
-        
-    }
-    
-    //    private func p_cropVideo() {
-    //        let path = Bundle.main.path(forResource: "cropVideo", ofType: ".mp4")
-    //
-    //        let videoAsset = AVAsset(url: URL(string: "http://120.25.226.186:32812/resources/videos/minion_01.mp4")!)
-    //
-    //        var isWXVideo: Bool
-    //
-    //        for item in videoAsset.metadata {
-    //
-    //            print("-----------identifier-----------------")
-    //            print(item.identifier ?? "nil")
-    //            print("-----------extraAttributes-----------------")
-    //            print(item.extraAttributes ?? "nil")
-    //            print("-----------value-----------------")
-    //            print(item.value ?? "nil")
-    //            print("-----------dataType-----------------")
-    //            print(item.dataType ?? "nil")
-    //
-    //
-    //        }
-    //    }
 }

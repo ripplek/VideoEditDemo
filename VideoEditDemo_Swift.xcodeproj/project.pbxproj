@@ -20,6 +20,7 @@
 		04758EFD2044221A00D5D5BC /* ShortVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04758EFC2044221A00D5D5BC /* ShortVideoViewController.swift */; };
 		04758EFF2044229100D5D5BC /* RecordVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04758EFE2044229100D5D5BC /* RecordVideoViewController.swift */; };
 		04758F01204422A400D5D5BC /* MergeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04758F00204422A400D5D5BC /* MergeVideoViewController.swift */; };
+		04987F4820494F96000C5D9B /* EditAndSynthesizeVideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04987F4720494F96000C5D9B /* EditAndSynthesizeVideoController.swift */; };
 		04F1F60D20230A990089DA29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1F60C20230A990089DA29 /* AppDelegate.swift */; };
 		04F1F60F20230A990089DA29 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1F60E20230A990089DA29 /* ViewController.swift */; };
 		04F1F61220230A990089DA29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04F1F61020230A990089DA29 /* Main.storyboard */; };
@@ -55,6 +56,7 @@
 		04758EFC2044221A00D5D5BC /* ShortVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortVideoViewController.swift; sourceTree = "<group>"; };
 		04758EFE2044229100D5D5BC /* RecordVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVideoViewController.swift; sourceTree = "<group>"; };
 		04758F00204422A400D5D5BC /* MergeVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeVideoViewController.swift; sourceTree = "<group>"; };
+		04987F4720494F96000C5D9B /* EditAndSynthesizeVideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAndSynthesizeVideoController.swift; sourceTree = "<group>"; };
 		04F1F60920230A990089DA29 /* VideoEditDemo_Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoEditDemo_Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F1F60C20230A990089DA29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04F1F60E20230A990089DA29 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				04758EFC2044221A00D5D5BC /* ShortVideoViewController.swift */,
 				04758EFE2044229100D5D5BC /* RecordVideoViewController.swift */,
 				04758F00204422A400D5D5BC /* MergeVideoViewController.swift */,
+				04987F4720494F96000C5D9B /* EditAndSynthesizeVideoController.swift */,
 				04F1F61020230A990089DA29 /* Main.storyboard */,
 				04F1F61320230A990089DA29 /* Assets.xcassets */,
 				04F1F61520230A990089DA29 /* LaunchScreen.storyboard */,
@@ -354,6 +357,7 @@
 				046BF10A2023127D009C44A5 /* UIColorExtensions.swift in Sources */,
 				046BF1092023127D009C44A5 /* Namespace.swift in Sources */,
 				04758EFB2044220C00D5D5BC /* PlayVideoViewController.swift in Sources */,
+				04987F4820494F96000C5D9B /* EditAndSynthesizeVideoController.swift in Sources */,
 				04F1F60D20230A990089DA29 /* AppDelegate.swift in Sources */,
 				04758EFD2044221A00D5D5BC /* ShortVideoViewController.swift in Sources */,
 			);
