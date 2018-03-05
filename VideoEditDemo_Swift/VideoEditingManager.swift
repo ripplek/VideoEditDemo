@@ -121,29 +121,7 @@ public class VideoEditingManager: NSObject {
             }
         }
         
-        // Get path
-        let documentDirectory = defaultPath
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .short
-        let date = dateFormatter.string(from: Date())
-        let savePath = documentDirectory.appendingPathComponent("mergeVideo-\(date).mov", isDirectory: false)
-        let outputURL = savePath
-        
-        // Create Exporter
-        guard let exporter = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality) else { return }
-        exporter.videoComposition = p_makeVideoSquare(mixAsset: mixComposition, unmixAssets: assets)
-        exporter.outputURL = outputURL
-        exporter.outputFileType = .mov
-        exporter.shouldOptimizeForNetworkUse = true
-        
-        // Perform the Export
-        delegate?.videoExportWillStart(session: exporter)
-        exporter.exportAsynchronously {
-            DispatchQueue.main.async {
-                self.p_exportDidFinish(session: exporter)
-            }
-        }
+        p_export(mixComposition: mixComposition, unmixAssets: assets)
     }
     
     private func p_editAndSynthesizeVideo(_ asset: AVAsset, ranges: [(starTime: Float64, duration: Float64)]) {
@@ -189,23 +167,30 @@ public class VideoEditingManager: NSObject {
             }
         }
         
+        p_export(mixComposition: mixComposition, unmixAssets: [asset])
+    }
+    
+    // MARK: - Export
+    
+    private func p_export(mixComposition: AVAsset, unmixAssets: [AVAsset]) {
         // Get path
-        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let documentDirectory = defaultPath
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         dateFormatter.timeStyle = .short
         let date = dateFormatter.string(from: Date())
-        let savePath = documentDirectory.appending("/mergeVideo-\(date).mov")
-        let outputURL = URL(fileURLWithPath: savePath)
+        let savePath = documentDirectory.appendingPathComponent("mergeVideo-\(date).mov", isDirectory: false)
+        let outputURL = savePath
         
         // Create Exporter
         guard let exporter = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality) else { return }
-        exporter.videoComposition = p_makeVideoSquare(mixAsset: mixComposition, unmixAssets: [asset])
+        exporter.videoComposition = p_makeVideoSquare(mixAsset: mixComposition, unmixAssets: unmixAssets)
         exporter.outputURL = outputURL
         exporter.outputFileType = .mov
         exporter.shouldOptimizeForNetworkUse = true
         
         // Perform the Export
+        delegate?.videoExportWillStart(session: exporter)
         exporter.exportAsynchronously {
             DispatchQueue.main.async {
                 self.p_exportDidFinish(session: exporter)
