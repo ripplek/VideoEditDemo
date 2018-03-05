@@ -37,7 +37,8 @@ class MergeVideoViewController: UIViewController {
     
     @IBAction func merge(_ sender: UIButton) {
         if let firstAsset = _firstAsset, let secondAsset = _secondAsset {
-            p_mergeVideo([firstAsset, secondAsset])
+//            p_mergeVideo([firstAsset, secondAsset])
+            VideoEditingManager.shared.mergeVideo([firstAsset, secondAsset])
         }
     }
 

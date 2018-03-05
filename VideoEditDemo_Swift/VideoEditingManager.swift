@@ -1,8 +1,8 @@
 //
-//  EditAndSynthesizeVideoController.swift
+//  VideoEditingManager.swift
 //  VideoEditDemo_Swift
 //
-//  Created by ripple_k on 2018/3/2.
+//  Created by ripple_k on 2018/3/5.
 //  Copyright © 2018年 mac. All rights reserved.
 //
 
@@ -10,46 +10,139 @@ import UIKit
 import AVFoundation
 import MobileCoreServices
 
-class EditAndSynthesizeVideoController: UIViewController {
+public protocol VideoEditingDelegate: NSObjectProtocol {
+    func videoExportWillStart(session: AVAssetExportSession)
+    func videoExportDidFinish(session: AVAssetExportSession)
+}
+
+public class VideoEditingManager: NSObject {
+    // MARK: - public
     
-    @IBOutlet weak var starTimeTextField: UITextField!
-    @IBOutlet weak var durationTimeTextField: UITextField!
-    @IBOutlet weak var MessageLabel: UILabel!
+    /// singleton
+    public static let shared = VideoEditingManager()
     
-    @IBAction func chooseVideoAsset(_ sender: UIButton) {
-        p_startMediaBrowserFromViewController(self, usingDelegate: self)
+    /// VideoEditingDelegate
+    public weak var delegate: VideoEditingDelegate?
+    
+    /// VideoOutputPath
+    public var defaultPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!)
+    
+    /// Take a screenshot of the specified time point from video.
+    ///
+    /// - Parameters:
+    ///   - asset: Video asset
+    ///   - shotTime: Shot time in video
+    /// - Returns: Image form video
+    public func getImageFromVideo(asset: AVAsset, shotTime: Double) -> UIImage? {
+        return p_getImageFromVideo(asset: asset, shotTime: shotTime)
     }
     
-    @IBAction func addTimeRange(_ sender: UIButton) {
-        if let star = Float64(starTimeTextField.text ?? ""), let duration = Float64(durationTimeTextField.text ?? "") {
-            _timeRanges.append((star, duration))
-            MessageLabel.text?.append("addTimeRange\((star, duration))\n")
+    /// Merge multiple video.
+    ///
+    /// - Parameters:
+    ///   - assets: Video assets
+    ///   - savePath: Video output path default is `defaultPath`
+    public func mergeVideo(_ assets: [AVAsset], savePath: URL? = nil) {
+        if let savePath = savePath {
+            defaultPath = savePath
         }
+        p_mergeVideo(assets)
     }
     
-    @IBAction func cutVideo(_ sender: UIButton) {
-        guard let asset = _videoAsset, _timeRanges.count > 0 else {
+    /// The video clip.
+    ///
+    /// - Parameters:
+    ///   - asset: Video asset
+    ///   - ranges: Video clip time segment
+    ///   - savePath: Video output path default is `defaultPath`
+    public func editAndSynthesizeVideo(_ asset: AVAsset, ranges: [(starTime: Float64, duration: Float64)], savePath: URL? = nil) {
+        if let savePath = savePath {
+            defaultPath = savePath
+        }
+        p_editAndSynthesizeVideo(asset, ranges: ranges)
+    }
+    
+    // MARK: - private
+    
+    private func p_getImageFromVideo(asset: AVAsset, shotTime: Double) -> UIImage? {
+        guard asset.tracks(withMediaType: .video).count > 0 else { return nil }
+        
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.requestedTimeToleranceAfter = kCMTimeZero
+        imageGenerator.requestedTimeToleranceBefore = CMTime(seconds: 1, preferredTimescale: 1)
+        
+        let shortPoint = CMTimeMakeWithSeconds(shotTime, 600)
+        var actualTime = CMTime()
+        let imageRef = try? imageGenerator.copyCGImage(at: shortPoint, actualTime: &actualTime)
+        
+        if let imageRef = imageRef {
+            return UIImage(cgImage: imageRef)
+        }
+        return nil
+    }
+    
+    private func p_mergeVideo(_ assets: [AVAsset]) {
+        guard assets.count >= 2 else {
+            print("Merge assets.count < 2")
             return
         }
-        MessageLabel.text?.append("cutVideo...")
-        VideoEditingManager.shared.editAndSynthesizeVideo(asset, ranges: _timeRanges)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-    
-    private var _videoAsset: AVAsset?
-    private var _timeRanges: [(Float64, Float64)] = []
-    
-    @objc private func video(path: String, didFinishSavingWithError error: NSError?, contextInfo: Any) {
-        if error != nil {
-            print(error ?? "error")
-            MergeVideoViewController.showAlert(controller: self, title: "错误", message: "保存失败\n\(error!.localizedDescription)")
-        } else {
-            MergeVideoViewController.showAlert(controller: self, title: "保存成功", message: "保存到本地相册")
+        
+        // Create AVMutableComposition object. This object will hold your AVMutableCompositionTrack instances.
+        let mixComposition = AVMutableComposition()
+        // Video track
+        if let videoTrack = mixComposition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid) {
+            
+            do {
+                var beforeAsset: AVAsset?
+                for asset in assets {
+                    if let track = asset.tracks(withMediaType: .video).first {
+                        try videoTrack.insertTimeRange(CMTimeRangeMake(kCMTimeZero, asset.duration), of: track, at: beforeAsset?.duration ?? kCMTimeZero)
+                    }
+                    beforeAsset = asset
+                }
+            } catch _ {
+                print("Failed to load first track")
+            }
+        }
+        
+        // Audio track
+        if let audioTrack = mixComposition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid) {
+            
+            do {
+                var beforeAsset: AVAsset?
+                for asset in assets {
+                    if let track = asset.tracks(withMediaType: .audio).first {
+                        try audioTrack.insertTimeRange(CMTimeRangeMake(kCMTimeZero, asset.duration), of: track, at: beforeAsset?.duration ?? kCMTimeZero)
+                    }
+                    beforeAsset = asset
+                }
+            } catch _ {
+                print("Failed to load audio track")
+            }
+        }
+        
+        // Get path
+        let documentDirectory = defaultPath
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short
+        let date = dateFormatter.string(from: Date())
+        let savePath = documentDirectory.appendingPathComponent("mergeVideo-\(date).mov", isDirectory: false)
+        let outputURL = savePath
+        
+        // Create Exporter
+        guard let exporter = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality) else { return }
+        exporter.videoComposition = p_makeVideoSquare(mixAsset: mixComposition, unmixAssets: assets)
+        exporter.outputURL = outputURL
+        exporter.outputFileType = .mov
+        exporter.shouldOptimizeForNetworkUse = true
+        
+        // Perform the Export
+        delegate?.videoExportWillStart(session: exporter)
+        exporter.exportAsynchronously {
+            DispatchQueue.main.async {
+                self.p_exportDidFinish(session: exporter)
+            }
         }
     }
     
@@ -120,28 +213,47 @@ class EditAndSynthesizeVideoController: UIViewController {
         }
     }
     
+    // MARK: - ExportDidFinish
+    
     private func p_exportDidFinish(session: AVAssetExportSession) {
-        if session.status == .completed {
-            if let outputURL = session.outputURL {
-                if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(outputURL.path) {
-                    UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, self, #selector(video(path:didFinishSavingWithError:contextInfo:)), nil)
+        guard let delegate = delegate else {
+            if session.status == .completed {
+                if let outputURL = session.outputURL {
+                    if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(outputURL.path) {
+                        UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, self, #selector(p_video(path:didFinishSavingWithError:contextInfo:)), nil)
+                    }
                 }
             }
-        }
-    }
-
-    private func p_startMediaBrowserFromViewController(_ viewController: UIViewController, usingDelegate delegate: UIImagePickerControllerDelegate & UINavigationControllerDelegate) {
-        guard UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) else {
+            
+            if session.status == .failed {
+                print("exportFailed:",
+                      session.outputURL ?? "outputURL",
+                      session.error?.localizedDescription ?? "error")
+            }
             return
         }
         
-        let mediaUI = UIImagePickerController()
-        mediaUI.sourceType = UIImagePickerControllerSourceType.savedPhotosAlbum
-        mediaUI.mediaTypes = [kUTTypeMovie as String]
-        mediaUI.allowsEditing = false
-        mediaUI.delegate = delegate
-        viewController.present(mediaUI, animated: true, completion: nil)
+        delegate.videoExportDidFinish(session: session)
     }
+    
+    @objc private func p_video(path: String, didFinishSavingWithError error: NSError?, contextInfo: Any) {
+        if error != nil {
+            print(error ?? "error")
+            p_showAlert(controller: UIApplication.shared.keyWindow!.rootViewController!, title: "错误", message: "保存失败\n\(error!.localizedDescription)")
+        } else {
+            p_showAlert(controller: UIApplication.shared.keyWindow!.rootViewController!, title: "保存成功", message: "保存到本地相册")
+        }
+    }
+    
+    private func p_showAlert(controller: UIViewController, title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "确定", style: .default, handler: nil)
+        
+        alert.addAction(action)
+        controller.present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Square
     
     private func p_makeVideoSquare(mixAsset: AVAsset, unmixAssets: [AVAsset]) -> AVMutableVideoComposition? {
         
@@ -229,26 +341,6 @@ class EditAndSynthesizeVideoController: UIViewController {
         }
         return t2
     }
-
-}
-
-extension EditAndSynthesizeVideoController: UIImagePickerControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let mediaType = info[UIImagePickerControllerMediaType] else { return }
-        
-        dismiss(animated: false, completion: nil)
-        
-        if CFStringCompare(mediaType as! CFString, kUTTypeMovie, CFStringCompareFlags(rawValue: 0)) == .compareEqualTo {
-            
-            if let mediaURL = info[UIImagePickerControllerMediaURL] as? URL {
-                _videoAsset = AVAsset(url: mediaURL)
-            }
-        }
-    }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
 }
 
-extension EditAndSynthesizeVideoController: UINavigationControllerDelegate { }

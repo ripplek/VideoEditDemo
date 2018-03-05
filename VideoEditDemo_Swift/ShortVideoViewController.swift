@@ -33,9 +33,7 @@ class ShortVideoViewController: UIViewController {
             }
             .rx.tap.subscribe(onNext: { [unowned self] (_) in
                 self.player.play()
-//                self.p_cropVideo()
-                self.p_getImageFromVideo(asset: self.asset, shortTime: CMTimeGetSeconds(self.player.currentTime()))
-//                self.p_dropVideo(videoUrl: URL(string: "http://120.25.226.186:32812/resources/videos/minion_01.mp4")!, audioUrl: nil, captureRange: NSMakeRange(0, 3))
+                self.imageView.image = VideoEditingManager.shared.getImageFromVideo(asset: self.asset, shotTime: CMTimeGetSeconds(self.player.currentTime()))
             }).disposed(by: disposeBag)
         
         imageView
@@ -64,31 +62,5 @@ class ShortVideoViewController: UIViewController {
     private var player: AVPlayer!
     private let imageView = UIImageView()
     private let disposeBag = DisposeBag()
-    
-    /// 从视频中获取指定时间点的截图
-    ///
-    /// - Parameters:
-    ///   - asset: 视频资源
-    ///   - shortTime: 截取时间点
-    /// - Returns: 截取的图片资源
-    private func p_getImageFromVideo(asset: AVAsset, shortTime: Double) -> UIImage? {
-        guard asset.tracks(withMediaType: .video).count > 0 else { return nil }
-        
-        let imageGenerator = AVAssetImageGenerator(asset: asset)
-        imageGenerator.requestedTimeToleranceAfter = kCMTimeZero
-        imageGenerator.requestedTimeToleranceBefore = CMTime(seconds: 1, preferredTimescale: 1)
-        
-        let shortPoint = CMTimeMakeWithSeconds(shortTime, 600)
-        var actualTime = CMTime()
-        let imageRef = try? imageGenerator.copyCGImage(at: shortPoint, actualTime: &actualTime)
-        
-        if let imageRef = imageRef {
-            imageView.image = UIImage(cgImage: imageRef)
-            print(CMTimeCopyDescription(nil, shortPoint) ?? "nil")
-            print(CMTimeCopyDescription(nil, actualTime) ?? "nil")
-            return UIImage(cgImage: imageRef)
-        }
-        return nil
-    }
     
 }
