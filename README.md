@@ -1,16 +1,17 @@
 Video Edit in iOS by Swift
 ==========================
 
-####主要功能
+主要功能
+----
  * 视频快照
  * 视频合并
  * 视频裁剪
 
  
-####<a href="./Exaple">Example</a>
+<a href="https://github.com/ripplek/VideoEditDemo/tree/master/VideoEditDemo_Swift/Example">Example</a>
 ----
 
-####VideoEditingManager 核心类
+VideoEditingManager 核心类
 ----
 - delegate: VideoEditingDelegate
 	* func videoExportWillStart(session: AVAssetExportSession)
