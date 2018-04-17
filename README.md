@@ -14,14 +14,14 @@ Video Edit in iOS by Swift
 VideoEditingManager 核心类
 ----
 - delegate: VideoEditingDelegate
-	* func videoExportWillStart(session: AVAssetExportSession)
-	* func videoExportDidFinish(session: AVAssetExportSession)
+	* `func videoExportWillStart(session: AVAssetExportSession)`
+	* `func videoExportDidFinish(session: AVAssetExportSession)`
 
 - publicAPI：
-	* public func getImageFromVideo(asset: AVAsset, shotTime: Double) -> UIImage?
+	* `public func getImageFromVideo(asset: AVAsset, shotTime: Double) -> UIImage?`
 	
-	* public func mergeVideo(_ assets: [AVAsset], savePath: URL? = nil)
+	* `public func mergeVideo(_ assets: [AVAsset], savePath: URL? = nil)`
 	
-	* public func editAndSynthesizeVideo(_ asset: AVAsset, ranges: [(starTime: Float64, duration: Float64)], savePath: URL? = nil)
+	* `public func editAndSynthesizeVideo(_ asset: AVAsset, ranges: [(starTime: Float64, duration: Float64)], savePath: URL? = nil)`
 	
 	
