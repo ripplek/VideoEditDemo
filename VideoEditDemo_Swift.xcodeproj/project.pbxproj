@@ -25,7 +25,6 @@
 		04F1F60D20230A990089DA29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1F60C20230A990089DA29 /* AppDelegate.swift */; };
 		04F1F60F20230A990089DA29 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1F60E20230A990089DA29 /* ViewController.swift */; };
 		04F1F61220230A990089DA29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04F1F61020230A990089DA29 /* Main.storyboard */; };
-		04F1F61420230A990089DA29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04F1F61320230A990089DA29 /* Assets.xcassets */; };
 		04F1F61720230A990089DA29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04F1F61520230A990089DA29 /* LaunchScreen.storyboard */; };
 		04F1F62220230A9A0089DA29 /* VideoEditDemo_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1F62120230A9A0089DA29 /* VideoEditDemo_SwiftTests.swift */; };
 		04F1F62D20230A9A0089DA29 /* VideoEditDemo_SwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1F62C20230A9A0089DA29 /* VideoEditDemo_SwiftUITests.swift */; };
@@ -63,7 +62,6 @@
 		04F1F60C20230A990089DA29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04F1F60E20230A990089DA29 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		04F1F61120230A990089DA29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		04F1F61320230A990089DA29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04F1F61620230A990089DA29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04F1F61820230A9A0089DA29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04F1F61D20230A9A0089DA29 /* VideoEditDemo_SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoEditDemo_SwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +120,18 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		04CF9A5F20860AD60014F787 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				04758EFA2044220C00D5D5BC /* PlayVideoViewController.swift */,
+				04758EFC2044221A00D5D5BC /* ShortVideoViewController.swift */,
+				04758EFE2044229100D5D5BC /* RecordVideoViewController.swift */,
+				04758F00204422A400D5D5BC /* MergeVideoViewController.swift */,
+				04987F4720494F96000C5D9B /* EditAndSynthesizeVideoController.swift */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
 		04F1F60020230A990089DA29 = {
 			isa = PBXGroup;
 			children = (
@@ -147,16 +157,11 @@
 		04F1F60B20230A990089DA29 /* VideoEditDemo_Swift */ = {
 			isa = PBXGroup;
 			children = (
+				04CF9A5F20860AD60014F787 /* Example */,
 				048E0E0B204CE9FA007213CE /* VideoEditingManager.swift */,
 				04F1F60C20230A990089DA29 /* AppDelegate.swift */,
 				04F1F60E20230A990089DA29 /* ViewController.swift */,
-				04758EFA2044220C00D5D5BC /* PlayVideoViewController.swift */,
-				04758EFC2044221A00D5D5BC /* ShortVideoViewController.swift */,
-				04758EFE2044229100D5D5BC /* RecordVideoViewController.swift */,
-				04758F00204422A400D5D5BC /* MergeVideoViewController.swift */,
-				04987F4720494F96000C5D9B /* EditAndSynthesizeVideoController.swift */,
 				04F1F61020230A990089DA29 /* Main.storyboard */,
-				04F1F61320230A990089DA29 /* Assets.xcassets */,
 				04F1F61520230A990089DA29 /* LaunchScreen.storyboard */,
 				04F1F61820230A9A0089DA29 /* Info.plist */,
 			);
@@ -304,7 +309,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				04F1F61720230A990089DA29 /* LaunchScreen.storyboard in Resources */,
-				04F1F61420230A990089DA29 /* Assets.xcassets in Resources */,
 				04F1F61220230A990089DA29 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -34,6 +34,7 @@ class ShortVideoViewController: UIViewController {
             .rx.tap.subscribe(onNext: { [unowned self] (_) in
                 self.player.play()
                 self.imageView.image = VideoEditingManager.shared.getImageFromVideo(asset: self.asset, shotTime: CMTimeGetSeconds(self.player.currentTime()))
+                
             }).disposed(by: disposeBag)
         
         imageView

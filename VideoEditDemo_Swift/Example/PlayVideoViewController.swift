@@ -11,6 +11,7 @@ import MobileCoreServices
 import MediaPlayer
 import AVFoundation
 import AVKit
+import Photos
 
 class PlayVideoViewController: UIViewController {
 
@@ -41,9 +42,9 @@ class PlayVideoViewController: UIViewController {
 extension PlayVideoViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let mediaType = info[UIImagePickerControllerMediaType] else { return }
-        
+
         dismiss(animated: false, completion: nil)
-        
+
         if CFStringCompare(mediaType as! CFString, kUTTypeMovie, CFStringCompareFlags(rawValue: 0)) == .compareEqualTo {
             let theMovie = AVPlayerViewController()
             if let mediaURL = info[UIImagePickerControllerMediaURL] as? URL {
@@ -51,6 +52,7 @@ extension PlayVideoViewController: UIImagePickerControllerDelegate {
                 present(theMovie, animated: false, completion: nil)
             }
         }
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

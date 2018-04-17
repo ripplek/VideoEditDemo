@@ -202,18 +202,20 @@ public class VideoEditingManager: NSObject {
     
     private func p_exportDidFinish(session: AVAssetExportSession) {
         guard let delegate = delegate else {
-            if session.status == .completed {
+            
+            switch session.status {
+            case .completed:
                 if let outputURL = session.outputURL {
                     if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(outputURL.path) {
                         UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, self, #selector(p_video(path:didFinishSavingWithError:contextInfo:)), nil)
                     }
                 }
-            }
-            
-            if session.status == .failed {
+            case .failed:
                 print("exportFailed:",
                       session.outputURL ?? "outputURL",
                       session.error?.localizedDescription ?? "error")
+            default:
+                print(session.status)
             }
             return
         }

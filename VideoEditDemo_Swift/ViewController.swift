@@ -7,10 +7,8 @@
 //
 
 import UIKit
-import SnapKit
 import AVFoundation
-import RxCocoa
-import RxSwift
+import CoreLocation
 
 class ViewController: UIViewController {
 
